@@ -5,9 +5,12 @@ import { HelloWave } from '@/components/hello-wave';
 import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
+import { Pressable, Text } from 'react-native';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -20,6 +23,17 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">Welcome to PetKeep!</ThemedText>
         <HelloWave />
+      </ThemedView>
+      <ThemedView style={styles.stepContainer}>
+        <Pressable
+          onPress={() => router.push('/login')}
+          style={({ pressed }) => [
+            styles.loginButton,
+            pressed && styles.loginButtonPressed,
+          ]}
+        >
+          <Text style={styles.loginButtonText}>Entrar</Text>
+        </Pressable>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
@@ -83,6 +97,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
+  },
+  loginButton: {
+    backgroundColor: '#4f46e5',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    alignSelf: 'flex-start',
+  },
+  loginButtonPressed: {
+    opacity: 0.9,
+  },
+  loginButtonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '600',
   },
   stepContainer: {
     gap: 8,
